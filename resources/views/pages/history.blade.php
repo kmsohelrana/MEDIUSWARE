@@ -30,7 +30,11 @@
 			@endforelse	 
 		  
 		</tbody>
+
 	  </table>
+
+	  {{ $socialPosts->links() }}
+
 
 </div>
 @endsection

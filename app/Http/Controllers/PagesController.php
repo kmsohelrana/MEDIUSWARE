@@ -171,7 +171,7 @@ class PagesController extends Controller
     {
         $user = User::find(Auth::id()); 
 
-        $socialPosts = SocialPosts::with('group')->get();
+        $socialPosts = SocialPosts::with('group')->paginate(10);
 
         return view('pages.history')->with('socialPosts', $socialPosts);
     }

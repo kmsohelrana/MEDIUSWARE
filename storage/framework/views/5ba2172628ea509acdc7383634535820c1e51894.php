@@ -28,7 +28,12 @@
 			<?php endif; ?>	 
 		  
 		</tbody>
+
 	  </table>
+
+	  <?php echo e($socialPosts->links()); ?>
+
+
 
 </div>
 <?php $__env->stopSection(); ?>
