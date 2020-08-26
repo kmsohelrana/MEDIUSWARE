@@ -1,8 +1,35 @@
 <?php $__env->startSection('content'); ?>
-
-
 <div class="container-fluid app-body settings-page">
+<form action="<?php echo e(route('history')); ?>" method="get">
+		<?php echo e(csrf_field()); ?>
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="input-group ">
+					<input type="text" name="name" class="form-control" placeholder="Group Name" required>		
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group">
+					<input type="text" name="date" placeholder="Post Date" class="form-control datepicker" required>			
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group">
+					<select name="type" class="form-control" required>
+						<option value="">Select-group-type</option>
+						<?php $__currentLoopData = $socialPostGroups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<option value="<?php echo e($key); ?>"><?php echo e($value); ?></option>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+					</select>				
+				</div>
+			</div>
+		</div>
+		<button type="submit" name="filter" value="filter" class="btn btn-primary">Filter</button>
+	    <a href="<?php echo e(url('history')); ?>" class="btn btn-success">Refresh</a>
+	</form>
 	<table class="table">
+	<thead><?php echo e($socialPosts->count()); ?></thead>
 		<thead>
 		  <tr>
 			<th scope="col">Group Name</th>

@@ -330,6 +330,11 @@ if($user_meta['temp_user'] === true){
 
 <script src="<?php echo e(asset('js/app.js')); ?>"></script>
 <script>
+    $('.datepicker').datepicker({
+        format: 'yyyy/mm/dd',
+    });
+</script>
+<script>
 
     var hash = window.location.hash;
     if (hash) {

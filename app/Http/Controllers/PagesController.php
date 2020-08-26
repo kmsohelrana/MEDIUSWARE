@@ -15,6 +15,7 @@ use GuzzleHttp\Exception\RequestException;
 use DB;
 use App\Http\Controllers\Input;
 use Bulkly\SocialPosts;
+use Carbon\Carbon;
 
 class PagesController extends Controller
 {
@@ -167,13 +168,32 @@ class PagesController extends Controller
         $user = User::find(Auth::id());
         return view('pages.calendar')->with('user', $user);
     }
-    public function history()
-    {
-        $user = User::find(Auth::id()); 
+    public function history(Request $request)
+    {        
 
-        $socialPosts = SocialPosts::with('group')->paginate(10);
+        $data = $request->all();
 
-        return view('pages.history')->with('socialPosts', $socialPosts);
+        $query = SocialPosts::with('group');
+
+        if($request->filter == 'filter'){
+
+            $date = Carbon::createFromFormat('m/d/Y', $data['date'])->format('Y-m-d');           
+                
+            $query->where("created_at", $date);                                 
+
+            $query->whereHas('group' , function ($q) use($data) {
+                $q->Where("name", $data["name"]);
+                $q->where("type", $data["type"]);
+            
+            });
+
+        }
+
+        $socialPosts = $query->paginate(10);
+
+        $socialPostGroups = SocialPostGroups::pluck('type','id');
+
+        return view('pages.history',compact('socialPosts','socialPostGroups'));
     }
 
     public function support()

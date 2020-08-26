@@ -1,10 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
-
-
 <div class="container-fluid app-body settings-page">
+<form action="{{ route('history') }}" method="get">
+		{{ csrf_field() }}
+		<div class="row">
+			<div class="col-md-4">
+				<div class="input-group ">
+					<input type="text" name="name" class="form-control" placeholder="Group Name" required>		
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group">
+					<input type="text" name="date" placeholder="Post Date" class="form-control datepicker" required>			
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group">
+					<select name="type" class="form-control" required>
+						<option value="">Select-group-type</option>
+						@foreach ($socialPostGroups as $key => $value)
+					<option value="{{ $key }}">{{ $value }}</option>
+						@endforeach
+					</select>				
+				</div>
+			</div>
+		</div>
+		<button type="submit" name="filter" value="filter" class="btn btn-primary">Filter</button>
+	    <a href="{{ url('history')}}" class="btn btn-success">Refresh</a>
+	</form>
 	<table class="table">
+	<thead>{{ $socialPosts->count() }}</thead>
 		<thead>
 		  <tr>
 			<th scope="col">Group Name</th>
