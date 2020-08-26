@@ -14,6 +14,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use DB;
 use App\Http\Controllers\Input;
+use Bulkly\SocialPosts;
 
 class PagesController extends Controller
 {
@@ -165,6 +166,14 @@ class PagesController extends Controller
     {
         $user = User::find(Auth::id());
         return view('pages.calendar')->with('user', $user);
+    }
+    public function history()
+    {
+        $user = User::find(Auth::id()); 
+
+        $socialPosts = SocialPosts::with('group')->get();
+
+        return view('pages.history')->with('socialPosts', $socialPosts);
     }
 
     public function support()
